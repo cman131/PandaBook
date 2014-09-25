@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Stock Chart";
+    var hsh = ViewBag.data;
+
+    /**
+     * Generates the stock chart from the data passed in through the ViewBag's data attribute
+     * @author - Conor Wright
+     * @param data - a Hashtable of data to graph
+     * @return Chart - the mapped data
+     */
+    String[] keys = new String[hsh.Count];
+    double[] values = new double[hsh.Count];
+    int count = 0;
+    foreach (String key in hsh.Keys)
+    {
+        keys[count] = key;
+        values[count] = hsh[key];
+        count += 1;
+    }
+    Array.Sort<String>(keys);
+    count = 0;
+    foreach (String key in keys)
+    {
+        values[count] = hsh[key];
+        count += 1;
+    }
+    var myChart = new Chart(width: 600, height: 400) 
+       .AddTitle("Stock Chart") 
+       .AddSeries(chartType: "line",
+          xValue: keys, 
+          yValues: values) 
+       .Write();
+}

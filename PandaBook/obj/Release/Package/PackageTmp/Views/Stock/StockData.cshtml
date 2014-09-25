@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "StockData";
+}
+
+<h2 style="margin-left: 19%;">StockData</h2>
+<div id="downloadSection" class="jumbotron">
+    <h3>Download Transaction History</h3>
+       <a class="superButton" href="MyData" download="MyStockData.yoho">Download</a>
+</div>
+<div id="uploadSection" class="jumbotron" style="margin-top:20px">
+    <h3>Upload Transaction History</h3>
+    @using (Html.BeginForm("Upload", "Stock", FormMethod.Post))
+    {
+    <input type="file" id="fileUpload" style="margin: 0 auto;" />
+    <input class="superButton" type="submit" value="Upload" />
+    }
+</div>

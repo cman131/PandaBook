@@ -1,0 +1,164 @@
+﻿<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-50657305-1', 'rit.edu');
+    ga('send', 'pageview');
+
+</script>
+@{
+    if(ViewBag.code != "" && ViewBag.code != null && ViewBag.count!=0){
+        ViewBag.Title = ViewBag.code+" Stock";
+    }
+    else
+    {
+        ViewBag.Title = "Stock Not Found";
+    }
+    var hsh = ViewBag.data;
+    String k = "";
+    double preD = 0;
+    int count = 0;
+    String changeColor = "black";
+    double d = 0;
+    try { 
+        foreach (String key in ViewBag.keys)
+        {
+            if(count==0){
+                k = key;
+            }
+            else{
+                preD = Math.Round(hsh[k] - hsh[key], 2);
+                break;
+            }
+            count+=1;
+        }
+        d = Math.Round(hsh[k], 2);
+        if (preD < 0)
+        {
+            changeColor = "red";
+        }
+        else if (preD > 0)
+        {
+            changeColor = "green";
+        }
+    }
+    catch (Exception e)
+    { Console.WriteLine(e.ToString()); }
+}
+<meta property="og:image" content="./StockChart?code=@ViewBag.code"/>
+<div id="stockDrawer">
+    <div class="roundside">
+        <div>
+            <label>Search Stock Code: </label>
+            <input id="changeStock" type="text" placeholder="Stock Code" onkeydown="if (event.keyCode == 13) document.getElementById('submitChangeStock').click()">
+            <button id="submitChangeStock" title="Submit" class="btn btn-default" onclick="window.location.href = './Stock?code=' + $('#changeStock').val()">Submit</button>
+        </div>
+        <ul class="nav nav-pills nav-stacked span2">
+            @Html.Raw(ViewBag.listOStocks);
+        </ul>
+    </div>
+    <div class="roundbottom"></div>
+</div><div id="drawerTab"><b>»</b></div>
+<div class="jumbotron stockotron">
+    <div id="heart" title="favorite stock?" onclick="favorite('@ViewBag.code', ($('#heart .aft').css('background-color')!='rgb(255, 0, 0)' && $('#heart .aft').css('background-color')!='rgb(255, 51, 51)'))"><div class="bef"></div><div class="aft"></div></div>
+    <h2 id="datStockHeader" title="http://localhost:28202/Stock/Stock?code=AAPL">@ViewBag.Title</h2>
+    <script type="text/javascript">
+        document.getElementById("datStockHeader").setAttribute('title', window.location.href);
+    </script>
+        <img id="datChartDoh" style="text-align: center; height: 80%; width:90%;" src="./StockChart?code=@ViewBag.code"><br>
+        <div id="chartChanger">
+            <input id="date1" class="inputs" placeholder="yyyy-MM-dd">
+            <button id="updateChart" onclick="updateChart('@ViewBag.code', $('#date1').val(), $('#date2').val());" class="btn btn-default">Update Chart</button>
+            <input id="date2" class="inputs" placeholder="yyyy-MM-dd">
+        </div>
+        <div class="row" style="width: 90% padding: 14px 24px; font-size: 21px;">
+            <div class="col-sm-4" style="text-align: center; width: 100%; padding: 14px 24px; font-size: 21px;">
+                <ul class="list-group" style="text-align: center; width: 100%; padding: 14px 24px; font-size: 21px; ">
+                    <li class="list-group-item"><label>Current Quote: </label><b> @d</b></li>
+                    <li class="list-group-item"><label>Recent Change: </label><b id="SPChangeVal" style="color:@changeColor"> @preD</b></li>
+                    <li class="list-group-item"><label>Change Date: </label><b> @k</b></li>
+                    <li id="shareSet" class="list-group-item"><label>Shares Owned: </label><b> @ViewBag.shareCount</b></li>
+                </ul>
+                <div id="transactions">
+                    <button id="buyButton" onclick="buy('@ViewBag.code', $('#shareCount').val())" class="btn btn-default">Buy</button>
+                    <input id="shareCount" class="inputs" title="Number of Shares" type="text">
+                    <button id="sellButton" onclick="sell('@ViewBag.code', $('#shareCount').val())" class="btn btn-default">Sell</button>
+                </div>
+                <button class="btn btn-default" onclick="FB.ui({
+        method: 'feed',
+            link: $('.stockotron h2').attr('title'),
+        caption: $('.stockotron h2').text(),
+        }, function(response){});" style="color: white; background-color: blue; float: right;">
+        <b>Share</b>
+    </button>
+</div><!-- /.col-sm-4 -->
+</div>
+</div>
+<div id="noteSection" style="padding-bottom: 10px;">
+    <div id="notePanel" class="radius">View Note</div>
+    <div id="datNote" class="radius" style="padding-bottom: 10px;">
+        <div id="note1">
+            <p>@ViewBag.note</p>
+            <button class="superButton" onclick="$('#note1').css('display', 'none'); $('#note2').css('display', 'block'); $('#note2 input').val($('#note1 p').html());">Edit Note</button>
+        </div>
+        <div id="note2" style="display: none">
+            <textarea style="height: 90px; width: 90%;"></textarea>
+            <button class="superButton" onclick="$('#note2').css('display', 'none'); $('#note1').css('display', 'block');">Cancel</button>
+            <button class="superButton" onclick="$('#note2').css('display', 'none'); $('#note1').css('display', 'block'); setNote('@ViewBag.code', $('#note2 textarea').val());">Submit</button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $("#notePanel").click(function () {
+        $("#datNote").slideToggle("slow");
+    });
+    $("#heart .bef").css("background", '@ViewBag.isFavored');
+    $("#heart .aft").css("background", '@ViewBag.isFavored');
+    $("#heart .bef").hover(function () {
+        var tempting = $("#heart .bef").css("background-color");
+        $("#heart .bef").css("background-color", (tempting == "rgb(0, 0, 255)" || tempting == 'rgb(51, 51, 255)') ? 'rgb(51, 51, 255)' : 'rgb(255, 51, 51)');
+        $("#heart .aft").css("background-color", (tempting == "rgb(0, 0, 255)" || tempting == 'rgb(51, 51, 255)') ? 'rgb(51, 51, 255)' : 'rgb(255, 51, 51)');
+        
+    }, function () {
+        var tempting = $("#heart .bef").css("background-color");
+        $("#heart .bef").css("background-color", (tempting == "rgb(0, 0, 255)" || tempting == 'rgb(51, 51, 255)') ? 'rgb(0, 0, 255)' : 'rgb(255, 0, 0)');
+        $("#heart .aft").css("background-color", (tempting == "rgb(0, 0, 255)" || tempting == 'rgb(51, 51, 255)') ? 'rgb(0, 0, 255)' : 'rgb(255, 0, 0)');
+    });
+    $("#heart .aft").hover(function () {
+        var tempting = $("#heart .bef").css("background-color");
+        $("#heart .bef").css("background-color", (tempting == "rgb(0, 0, 255)" || tempting == 'rgb(51, 51, 255)') ? 'rgb(51, 51, 255)' : 'rgb(255, 51, 51)');
+        $("#heart .aft").css("background-color", (tempting == "rgb(0, 0, 255)" || tempting == 'rgb(51, 51, 255)') ? 'rgb(51, 51, 255)' : 'rgb(255, 51, 51)');
+
+    }, function () {
+        var tempting = $("#heart .bef").css("background-color");
+        $("#heart .bef").css("background-color", (tempting == "rgb(0, 0, 255)" || tempting == 'rgb(51, 51, 255)') ? 'rgb(0, 0, 255)' : 'rgb(255, 0, 0)');
+        $("#heart .aft").css("background-color", (tempting == "rgb(0, 0, 255)" || tempting == 'rgb(51, 51, 255)') ? 'rgb(0, 0, 255)' : 'rgb(255, 0, 0)');
+    });
+    $("#drawerTab").click(function () {
+        var pos = $("#stockDrawer").position();
+        if (!$("#stockDrawer").hasClass("expanded")) {
+            $("#stockDrawer").stop(true, false).animate({
+                left: "15.8%"
+            });
+            $("#drawerTab").stop(true, false).animate({
+                left: "45.8%"
+            });
+            $("#stockDrawer").addClass("expanded");
+            $("#drawerTab b").text("«");
+        }
+        else {
+            $("#stockDrawer").stop(true, false).animate({
+                left: "-14.2%"
+            });
+            $("#drawerTab").stop(true, false).animate({
+                left: "15.8%"
+            });
+            $("#stockDrawer").removeClass("expanded");
+            $("#drawerTab b").text("»");
+        }
+    });
+    </script>

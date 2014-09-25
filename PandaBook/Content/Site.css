@@ -1,0 +1,587 @@
+﻿/* ----Down the Up or Up the Down---- */
+#uploadSection, #downloadSection {
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* ----Does You Heart Dis Stock?---- */
+#heart {
+    position: absolute;
+    display: block;
+    float: right;
+    width: 50px;
+    height: 45px;
+    margin: 0;
+    margin-left: 80%;
+}
+
+    #heart .bef,
+    #heart .aft {
+        position: absolute;
+        content: "";
+        left: 25px;
+        top: 0;
+        width: 25px;
+        height: 40px;
+        background: red;
+        -moz-border-radius: 25px 25px 0 0;
+        border-radius: 25px 25px 0 0;
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        -webkit-transform-origin: 0 100%;
+        -moz-transform-origin: 0 100%;
+        -ms-transform-origin: 0 100%;
+        -o-transform-origin: 0 100%;
+        transform-origin: 0 100%;
+    }
+
+    #heart .aft {
+        left: 0;
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        transform: rotate(45deg);
+        -webkit-transform-origin: 100% 100%;
+        -moz-transform-origin: 100% 100%;
+        -ms-transform-origin: 100% 100%;
+        -o-transform-origin: 100% 100%;
+        transform-origin: 100% 100%;
+    }
+
+/* ----The Drawer not for Socks---- */
+#stockDrawer {
+    z-index: 2;
+    height: 100%;
+    background-color: SlateGray;
+    position: absolute;
+    width: 30%;
+    left: -14.2%;
+    border-bottom-right-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+    #stockDrawer div.roundside {
+        height: 100%;
+        width: 100%;
+    }
+
+    #stockDrawer div div {
+        text-align: center;
+        margin-top: 6px;
+    }
+
+#drawerTab {
+    cursor: pointer;
+    cursor: hand;
+    z-index: 3;
+    position: absolute;
+    background-color: SlateGray;
+    width: 30px;
+    height: 60px;
+    line-height: 60px;
+    font-size: 30px;
+    text-align: center;
+    margin-top: 45px;
+    left: 15.8%;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+#stockDrawer ul {
+    height: 90%;
+    margin-top: 6px;
+    overflow-y: auto;
+    list-style-position: inside;
+    display: block;
+}
+
+    #stockDrawer ul li {
+        left: 6px;
+        right: 6px;
+        background-color: white;
+        width: 97%;
+    }
+
+/* ----Tickle Time---- */
+div.tickTime, span.tickTime {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+ul.tickTime {
+    list-style: none;
+}
+
+#stock_ticker {
+    font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: #002b3b;
+    width: 100%;
+    height: 27px;
+    margin: 0px auto 0;
+    overflow: hidden;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    padding: 3px;
+    position: relative;
+    -webkit-box-shadow: inset 0px 1px 2px rgba(0,0,0,0.5);
+    -moz-box-shadow: inset 0px 1px 2px rgba(0,0,0,0.5);
+    box-shadow: inset 0px 1px 2px rgba(0,0,0,0.5);
+}
+
+    #stock_ticker span {
+        float: left;
+        color: white;
+        background: #00425a;
+        padding: 6px;
+        position: relative;
+        border-radius: 4px;
+        font-size: 12px;
+        -webkit-box-shadow: inset 0px 1px 1px rgba(255, 255, 255, 0.2), 0px 1px 1px rgba(0,0,0,0.5);
+        -moz-box-shadow: inset 0px 1px 1px rgba(255, 255, 255, 0.2), 0px 1px 1px rgba(0,0,0,0.5);
+        box-shadow: inset 0px 1px 1px rgba(255, 255, 255, 0.2), 0px 1px 1px rgba(0,0,0,0.5);
+        background: rgb(0,75,103);
+        background: -moz-linear-gradient(top, rgba(0,75,103,1) 0%, rgba(0,53,72,1) 100%);
+        background: -webkit-linear-gradient(top, rgba(0,75,103,1) 0%,rgba(0,53,72,1) 100%);
+        background: -o-linear-gradient(top, rgba(0,75,103,1) 0%,rgba(0,53,72,1) 100%);
+        background: -ms-linear-gradient(top, rgba(0,75,103,1) 0%,rgba(0,53,72,1) 100%);
+        background: linear-gradient(top, rgba(0,75,103,1) 0%,rgba(0,53,72,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#004b67', endColorstr='#003548',GradientType=0 );
+    }
+
+    #stock_ticker ul {
+        padding-left: 20px;
+        -webkit-animation: ticker 10s cubic-bezier(1, 0, .5, 0) infinite;
+        -moz-animation: ticker 10s cubic-bezier(1, 0, .5, 0) infinite;
+        -ms-animation: ticker 10s cubic-bezier(1, 0, .5, 0) infinite;
+        animation: ticker 10s cubic-bezier(1, 0, .5, 0) infinite;
+    }
+
+        #stock_ticker ul:hover {
+            -webkit-animation-play-state: paused;
+            -moz-animation-play-state: paused;
+            -ms-animation-play-state: paused;
+            animation-play-state: paused;
+        }
+
+    #stock_ticker li {
+        line-height: 26px;
+    }
+
+    #stock_ticker a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 13px;
+    }
+
+@-webkit-keyframes ticker {
+    0% {
+        margin-top: 0;
+    }
+
+    20% {
+        margin-top: -26px;
+    }
+
+    40% {
+        margin-top: -52px;
+    }
+
+    60% {
+        margin-top: -78px;
+    }
+
+    80% {
+        margin-top: -104px;
+    }
+
+    100% {
+        margin-top: 0;
+    }
+}
+
+@-moz-keyframes ticker {
+    0% {
+        margin-top: 0;
+    }
+
+    20% {
+        margin-top: -26px;
+    }
+
+    40% {
+        margin-top: -52px;
+    }
+
+    60% {
+        margin-top: -78px;
+    }
+
+    80% {
+        margin-top: -104px;
+    }
+
+    100% {
+        margin-top: 0;
+    }
+}
+
+@-ms-keyframes ticker {
+    0% {
+        margin-top: 0;
+    }
+
+    20% {
+        margin-top: -26px;
+    }
+
+    40% {
+        margin-top: -52px;
+    }
+
+    60% {
+        margin-top: -78px;
+    }
+
+    80% {
+        margin-top: -104px;
+    }
+
+    100% {
+        margin-top: 0;
+    }
+}
+
+@keyframes ticker {
+    0% {
+        margin-top: 0;
+    }
+
+    20% {
+        margin-top: -26px;
+    }
+
+    40% {
+        margin-top: -52px;
+    }
+
+    60% {
+        margin-top: -78px;
+    }
+
+    80% {
+        margin-top: -104px;
+    }
+
+    100% {
+        margin-top: 0;
+    }
+}
+
+/* ----The Style Train---- */
+html, body, .container {
+    height: 100%;
+    width: 100%;
+}
+
+.superButton {
+	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f9f9f9), color-stop(1, #e9e9e9) );
+	background:-moz-linear-gradient( center top, #f9f9f9 5%, #e9e9e9 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f9f9f9', endColorstr='#e9e9e9');
+	background-color:#f9f9f9;
+	-webkit-border-top-left-radius:20px;
+	-moz-border-radius-topleft:20px;
+	border-top-left-radius:20px;
+	-webkit-border-top-right-radius:20px;
+	-moz-border-radius-topright:20px;
+	border-top-right-radius:20px;
+	-webkit-border-bottom-right-radius:20px;
+	-moz-border-radius-bottomright:20px;
+	border-bottom-right-radius:20px;
+	-webkit-border-bottom-left-radius:20px;
+	-moz-border-radius-bottomleft:20px;
+	border-bottom-left-radius:20px;
+	text-indent:0px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	color:#666666;
+	font-family:Arial;
+	font-size:13px;
+	font-weight:bold;
+	font-style:normal;
+	height:33px;
+	line-height:33px;
+	width:105px;
+	text-decoration:none;
+	text-align:center;
+	text-shadow:1px 1px 0px #ffffff;
+}
+.superButton:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #e9e9e9), color-stop(1, #f9f9f9) );
+	background:-moz-linear-gradient( center top, #e9e9e9 5%, #f9f9f9 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#e9e9e9', endColorstr='#f9f9f9');
+	background-color:#e9e9e9;
+}.superButton:active {
+	position:relative;
+	top:1px;
+}
+
+#noteSection {
+    display: block;
+    position: relative;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    padding-left: 15px;
+    padding-right: 15px;
+    bottom: 0;
+    float: right;
+    width: 720px;
+    margin-right: 20.5%;
+}
+
+#datNote,#notePanel
+{
+    padding:5px;
+    text-align:center;
+    background-color:rgb(238, 238, 238);;
+    border: 1px solid #FFF;;
+}
+#notePanel {
+    cursor: pointer;
+    cursor: hand;
+}
+#datNote
+{
+    padding:50px;
+    display:none;
+    padding-top: 20px;
+}
+
+#downloadSection, #uploadSection {
+    width: 40%;
+    margin: 0 auto;
+    margin-left: 5%;
+}
+
+#datLogo{
+    height: 40px;
+    width: 150px;
+    background: white;
+    position: absolute;
+    z-index: 5;
+    left: 0;
+    display: block;
+    top: 5px;
+}
+
+#datLogo:hover {
+    background-color: rgb(240, 211, 211) ;
+}
+
+.container {
+    display: table;
+    max-width: 100%;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: -50px;
+    padding-top: 50px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+header {
+    height: 50px;
+}
+
+.colmd3 {
+    display: table-cell;
+    float: left;
+    height: 800px;
+    background-color: white;
+    bottom: 0;
+    z-index: 4;
+    position: relative;
+    left: 0;
+    width: 16.2%;
+    padding-left: 15px;
+}
+
+.colmd9 {
+    float: right;
+    display: table-cell;
+    width: 83.8%;
+    height: 100%;
+}
+
+.jumbotron {
+    text-align: center;
+}
+
+.stockotron {
+    float: left;
+    left: 20px;
+    position: relative;
+    margin: auto 0;
+    margin-left: 20%;
+}
+
+.sideNav {
+    float: left;
+    width: 100%;
+    margin-bottom: 0;
+    background: #002b3b;
+    margin-top: 4px;
+    overflow: hidden;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    padding: 3px;
+}
+
+.sideNav .panel {
+    width: 100%;
+}
+
+#chartChanger {
+    margin-top: 20px;
+}
+
+.inputs  { 
+padding: 7px 25px; 
+font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica; 
+font-weight: 400; 
+font-size: 12px;
+text-shadow: 1px 1px 0 rgba(256, 256, 256, 1.0); 
+background: #FFF; 
+border: 1px solid #FFF; 
+border-radius: 5px; 
+box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.50); 
+-moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.50); 
+-webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.50); 
+} 
+.inputs:focus { 
+   background: #DFE9EC;
+box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25); 
+-moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.25); 
+-webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25); 
+    outline:0; 
+} 
+  .inputs:hover   { 
+background: #DFE9EC;
+}
+
+.radius {
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+}
+
+.roundtop {
+    width: 100%;
+    height: 10px;
+}
+
+.roundside {
+    background-repeat: repeat-y;
+    width: 100%;
+    text-align: center;
+}
+
+.roundbottom {
+    width: 100%;
+    height: 10px;
+}
+
+/* ----Panda Fun---- */
+input.pandamation {
+    -moz-animation-duration: 4s;
+    -webkit-animation-duration: 4s;
+    -moz-animation-name: walk;
+    -webkit-animation-name: walk;
+    width: 45%;
+    visibility: visible;
+}
+
+@-moz-keyframes walk {
+    from {
+        visibility: visible;
+        width: 0%;
+    }
+
+    to {
+        width: 45%;
+    }
+}
+
+@-webkit-keyframes walk {
+    from {
+        visibility: visible;
+        width: 0%;
+    }
+
+    to {
+        width: 45%;
+    }
+}
+
+/* google cards
+    ----------------------------------------------------------*/
+.card {
+    box-shadow: 0 1px 2px #aaa;
+    background: #F5F5F5;
+    margin: 0 1rem 1rem;
+    padding: 10px;
+    width: 70%;
+    border-radius: 3px;
+}
+
+
+section.card .postImage {
+    display: inline-block;
+}
+
+section.card .postTitle {
+    padding: 5px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+section.card .postLikes {
+    position: relative;
+}
+
+section.card li {
+    border: 2px solid;
+    width: 100%;
+    display: inline-block;
+}
+
+section.card .comImage {
+    float: left;
+    top: 0;
+    display: inline-block;
+    position: relative;
+    width: 15%;
+}
+
+section.card .comTitle {
+    position: relative;
+    float: left;
+    display: inline-block;
+    width: 30%;
+}

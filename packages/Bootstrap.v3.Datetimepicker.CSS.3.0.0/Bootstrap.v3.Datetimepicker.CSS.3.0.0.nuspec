@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Bootstrap.v3.Datetimepicker.CSS</id>
+    <version>3.0.0</version>
+    <title>Bootstrap V3 Datetimepicker CSS</title>
+    <authors>Eonasdan</authors>
+    <owners>Eonasdan</owners>
+    <projectUrl>https://github.com/Eonasdan/bootstrap-datetimepicker</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A date/time picker component designed to work with Bootstrap 3 and Momentjs.
+
+For usage, installation and demos see Project Site on GitHub
+
+For LESS version install Bootstrap.v3.Datetimepicker</description>
+    <releaseNotes>More GitHub issues have been fixed in the release. See project site for details.
+
+Very important! This release has several breaking changes in it. Please see the project site for the readme and docs for the new change details. You're scripts may not work if you don't adjust them!</releaseNotes>
+    <tags>bootstrap date time picker datetimepicker datepicker jquery</tags>
+    <dependencies>
+      <dependency id="Moment.js" version="2.4.0" />
+      <dependency id="Twitter.Bootstrap" version="3.0.1.1" />
+    </dependencies>
+  </metadata>
+</package>
